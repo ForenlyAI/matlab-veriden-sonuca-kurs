@@ -15,7 +15,7 @@ komut('4.2','ode45', {'m = 2;  k = 200;  c = 4;', 'f = @(t, x) [x(2); -(c * x(2)
 m = 2; k = 200; cc = 4; f = @(t,x) [x(2); -(cc*x(2) + k*x(1))/m]; [ts, xs] = ode45(f, 0:0.001:3, [0.05;0], odeset('RelTol',1e-8,'AbsTol',1e-10));
 tp = islocalmax(xs(:,1)); To = mean(diff(ts(tp))); Tf = 2*pi/(sqrt(k/m)*sqrt(1-(cc/(2*sqrt(k*m)))^2)); olc('d4_2_T_olcum', To); olc('d4_2_T_formul', Tf);
 fig = yeni_sekil; plot(ts, 1000*xs(:,1), 'Color', [0.49 0.13 0.81]); hold on; plot(ts(tp), 1000*xs(tp,1), 'v', 'MarkerFaceColor', [0.76 0.25 0.05], 'MarkerSize', 8);
-grid on; xlabel('zaman [s]'); ylabel('konum [mm]'); legend('ode45', 'islocalmax: tepeler'); title(sprintf('Yay–kütle–sönüm (ÖRNEK): ölçülen periyot %.4f s, formül %.4f s', To, Tf)); sekil(fig,'4.2','titresim');
+grid on; xlabel('zaman [s]'); ylabel('konum [mm]'); legend('ode45', 'islocalmax: tepeler'); title({'Yay–kütle–sönüm (ÖRNEK)', sprintf('ölçülen periyot %.4f s, formül %.4f s', To, Tf)}); sekil(fig,'4.2','titresim');
 %% 4.3 fzero ve fminsearch
 komut('4.3','kok-ve-en-iyi', {'h = 0.76;', 't_dus = fzero(@(t) h - 9.81 * t.^2 / 2, [0 1])', 'rng(3);  tt = (0:0.01:2)'';', 'olcum = 0.05 * exp(-1.2 * tt) .* cos(9 * tt) + 0.002 * randn(size(tt));', 'model = @(p, t) 0.05 * exp(-p(1) * t) .* cos(p(2) * t);', 'hata = @(p) sum((model(p, tt) - olcum).^2);', 'p = fminsearch(hata, [0.5 8])'});
 td = fzero(@(t) 0.76 - 9.81*t.^2/2, [0 1]); rng(3); tt = (0:0.01:2)'; ol = 0.05*exp(-1.2*tt).*cos(9*tt) + 0.002*randn(size(tt)); mdl = @(p,t) 0.05*exp(-p(1)*t).*cos(p(2)*t);
